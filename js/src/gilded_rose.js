@@ -6,98 +6,43 @@ function Item(name, sell_in, quality) {
 
 var items = [];
 
-function update_quality() {
-    for (var i = 0; i < items.length; i++) {
-        if (
-            items[i].name != 'Aged Brie' &&
-            items[i].name != 'Backstage passes to a TAFKAL80ETC concert'
-        ) {
-            if (items[i].quality > 0) {
-                if (items[i].name != 'Sulfuras, Hand of Ragnaros') {
-                    items[i].quality = items[i].quality - 1;
-                }
-            }
-        } else {
-            if (items[i].quality < 50) {
-                items[i].quality = items[i].quality + 1;
-                if (
-                    items[i].name == 'Backstage passes to a TAFKAL80ETC concert'
-                ) {
-                    if (items[i].sell_in < 11) {
-                        if (items[i].quality < 50) {
-                            items[i].quality = items[i].quality + 1;
-                        }
-                    }
-                    if (items[i].sell_in < 6) {
-                        if (items[i].quality < 50) {
-                            items[i].quality = items[i].quality + 1;
-                        }
-                    }
-                }
-            }
-        }
-        if (items[i].name != 'Sulfuras, Hand of Ragnaros') {
-            items[i].sell_in = items[i].sell_in - 1;
-        }
-        if (items[i].sell_in < 0) {
-            if (items[i].name != 'Aged Brie') {
-                if (
-                    items[i].name != 'Backstage passes to a TAFKAL80ETC concert'
-                ) {
-                    if (items[i].quality > 0) {
-                        if (items[i].name != 'Sulfuras, Hand of Ragnaros') {
-                            items[i].quality = items[i].quality - 1;
-                        }
-                    }
-                } else {
-                    items[i].quality = items[i].quality - items[i].quality;
-                }
-            } else {
-                if (items[i].quality < 50) {
-                    items[i].quality = items[i].quality + 1;
-                }
-            }
-        }
-    }
-}
-
 function decrease_sell_in(item) {
     item.sell_in -= 1;
 }
 
-function setMaxQuality(quality) {
+function set_max_quality(quality) {
     return Math.min(quality, 50);
 }
 
-function setMinQuality(quality) {
+function set_min_quality(quality) {
     return Math.max(quality, 0);
 }
 
-function inverselyProportionalQuality(item) {
+function inversely_proportional_quality(item) {
     decrease_sell_in(item);
     switch (true) {
         case item.sell_in < 6:
-            item.quality = setMaxQuality(item.quality + 3);
+            item.quality = set_max_quality(item.quality + 3);
             break;
         case item.sell_in < 11:
-            item.quality = setMaxQuality(item.quality + 2);
+            item.quality = set_max_quality(item.quality + 2);
             break;
         default:
-            item.quality = setMaxQuality(item.quality + 1);
+            item.quality = set_max_quality(item.quality + 1);
     }
 }
 
-function decreaseQuality(item) {
+function decrease_quality(item) {
     if (item.sell_in < 0) {
-        item.quality = setMinQuality(item.quality - 2);
+        item.quality = set_min_quality(item.quality - 2);
     } else {
-        item.quality = setMinQuality(item.quality - 1);
+        item.quality = set_min_quality(item.quality - 1);
     }
 }
 
-function directlyProportionalQuality(item) {
+function directly_proportional_quality(item) {
     decrease_sell_in(item);
-    decreaseQuality(item);
+    decrease_quality(item);
 }
 
 function update_quality2() {
@@ -108,10 +53,10 @@ function update_quality2() {
                 break;
             case 'Aged Brie':
             case 'Backstage passes to a TAFKAL80ETC concert':
-                inverselyProportionalQuality(item);
+                inversely_proportional_quality(item);
                 break;
             default:
-                directlyProportionalQuality(item);
+                directly_proportional_quality(item);
         }
     }
 }
