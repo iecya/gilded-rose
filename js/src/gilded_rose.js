@@ -21,6 +21,9 @@ function set_min_quality(quality) {
 function inversely_proportional_quality(item) {
     decrease_sell_in(item);
     switch (true) {
+        case item.sell_in < 0:
+            item.quality = 0;
+            break;
         case item.sell_in < 6:
             item.quality = set_max_quality(item.quality + 3);
             break;
