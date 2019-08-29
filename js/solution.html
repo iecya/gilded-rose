@@ -13,18 +13,13 @@
     $('body').append('<p>Starting Gilded Rose</p>');
 
     items.push(new Item('+5 Dexterity Vest', 10, 20));
-
-    // The below item's quality should increase to 3 instead of 1 (sell_in <= 5 -> quality +3)
     items.push(new Item('Aged Brie', 2, 0));
     items.push(new Item('Elixir of the Mongoose', 5, 7));
     items.push(new Item('Sulfuras, Hand of Ragnaros', 0, 80));
     items.push(new Item('Sulfuras, Hand of Ragnaros', -1, 80));
     items.push(new Item('Backstage passes to a TAFKAL80ETC concert', 15, 20));
-    // The below item's quality should increase to 51 instead of 50 (sell_in <= 10 -> quality +2)
     items.push(new Item('Backstage passes to a TAFKAL80ETC concert', 10, 49));
-    // The below item's quality should increase to 52 instead of 50 (sell_in <= 5 -> quality +3)
     items.push(new Item('Backstage passes to a TAFKAL80ETC concert', 5, 49));
-
     // this conjured item does not work properly yet
     items.push(new Item('Conjured Mana Cake', 3, 6));
 
