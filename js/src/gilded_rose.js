@@ -49,7 +49,7 @@ function directly_proportional_quality(item) {
     decrease_quality(item, decreaseUnit);
 }
 
-function update_quality2() {
+function update_quality() {
     for (var i = 0; i < items.length; i++) {
         let item = items[i];
         switch (item.name) {
