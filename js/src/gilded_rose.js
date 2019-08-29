@@ -65,17 +65,21 @@ function decrease_sell_in(item) {
     item.sell_in -= 1;
 }
 
+function setMaxQuality(quality) {
+    return Math.min(quality, 50);
+}
+
 function inverselyProportionalQuality(item) {
     decrease_sell_in(item);
     switch (true) {
         case item.sell_in < 6:
-            item.quality += 3;
+            item.quality = setMaxQuality(item.quality + 3);
             break;
         case item.sell_in < 11:
-            item.quality += 2;
+            item.quality = setMaxQuality(item.quality + 2);
             break;
         default:
-            item.quality += 1;
+            item.quality = setMaxQuality(item.quality + 1);
     }
 }
 
