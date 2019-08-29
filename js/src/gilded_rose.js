@@ -1,95 +1,103 @@
 function Item(name, sell_in, quality) {
-  this.name = name;
-  this.sell_in = sell_in;
-  this.quality = quality;
+    this.name = name;
+    this.sell_in = sell_in;
+    this.quality = quality;
 }
 
-var items = []
+var items = [];
 
 function update_quality() {
-  for (var i = 0; i < items.length; i++) {
-    if (items[i].name != 'Aged Brie' && items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-      if (items[i].quality > 0) {
-        if (items[i].name != 'Sulfuras, Hand of Ragnaros') {
-          items[i].quality = items[i].quality - 1
-        }
-      }
-    } else {
-      if (items[i].quality < 50) {
-        items[i].quality = items[i].quality + 1
-        if (items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
-          if (items[i].sell_in < 11) {
-            if (items[i].quality < 50) {
-              items[i].quality = items[i].quality + 1
+    for (var i = 0; i < items.length; i++) {
+        if (
+            items[i].name != 'Aged Brie' &&
+            items[i].name != 'Backstage passes to a TAFKAL80ETC concert'
+        ) {
+            if (items[i].quality > 0) {
+                if (items[i].name != 'Sulfuras, Hand of Ragnaros') {
+                    items[i].quality = items[i].quality - 1;
+                }
             }
-          }
-          if (items[i].sell_in < 6) {
-            if (items[i].quality < 50) {
-              items[i].quality = items[i].quality + 1
-            }
-          }
-        }
-      }
-    }
-    if (items[i].name != 'Sulfuras, Hand of Ragnaros') {
-      items[i].sell_in = items[i].sell_in - 1;
-    }
-    if (items[i].sell_in < 0) {
-      if (items[i].name != 'Aged Brie') {
-        if (items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-          if (items[i].quality > 0) {
-            if (items[i].name != 'Sulfuras, Hand of Ragnaros') {
-              items[i].quality = items[i].quality - 1
-            }
-          }
         } else {
-          items[i].quality = items[i].quality - items[i].quality
+            if (items[i].quality < 50) {
+                items[i].quality = items[i].quality + 1;
+                if (
+                    items[i].name == 'Backstage passes to a TAFKAL80ETC concert'
+                ) {
+                    if (items[i].sell_in < 11) {
+                        if (items[i].quality < 50) {
+                            items[i].quality = items[i].quality + 1;
+                        }
+                    }
+                    if (items[i].sell_in < 6) {
+                        if (items[i].quality < 50) {
+                            items[i].quality = items[i].quality + 1;
+                        }
+                    }
+                }
+            }
         }
-      } else {
-        if (items[i].quality < 50) {
-          items[i].quality = items[i].quality + 1
+        if (items[i].name != 'Sulfuras, Hand of Ragnaros') {
+            items[i].sell_in = items[i].sell_in - 1;
         }
-      }
+        if (items[i].sell_in < 0) {
+            if (items[i].name != 'Aged Brie') {
+                if (
+                    items[i].name != 'Backstage passes to a TAFKAL80ETC concert'
+                ) {
+                    if (items[i].quality > 0) {
+                        if (items[i].name != 'Sulfuras, Hand of Ragnaros') {
+                            items[i].quality = items[i].quality - 1;
+                        }
+                    }
+                } else {
+                    items[i].quality = items[i].quality - items[i].quality;
+                }
+            } else {
+                if (items[i].quality < 50) {
+                    items[i].quality = items[i].quality + 1;
+                }
+            }
+        }
     }
-  }
+}
+
+function decrease_sell_in(item) {
+    item.sell_in -= 1;
+}
+
+function inverselyProportionalQuality(item) {
+    decrease_sell_in(item);
+    switch (true) {
+        case item.sell_in < 6:
+            item.quality += 3;
+            break;
+        case item.sell_in < 11:
+            item.quality += 2;
+            break;
+        default:
+            item.quality += 1;
+    }
+}
+
+function directlyProportionalQuality(item) {
+    decrease_sell_in(item);
+    if (item.quality > 0) {
+        item.quality -= 1;
+    }
 }
 
 function update_quality2() {
-  for (var i = 0; i < items.length; i++) {
-    if (items[i].name != 'Aged Brie' && items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-      if (items[i].quality > 0 && items[i].name != 'Sulfuras, Hand of Ragnaros') {
-        items[i].quality = items[i].quality - 1
-      }
-    } else {
-      if (items[i].quality < 50) {
-        items[i].quality = items[i].quality + 1
-        if (items[i].name == 'Backstage passes to a TAFKAL80ETC concert' && items[i].quality < 50) {
-          if (items[i].sell_in < 11) {
-            items[i].quality = items[i].quality + 1
-          }
-          if (items[i].sell_in < 6) {
-            items[i].quality = items[i].quality + 1
-          }
+    for (var i = 0; i < items.length; i++) {
+        let item = items[i];
+        switch (item.name) {
+            case 'Sulfuras, Hand of Ragnaros':
+                break;
+            case 'Aged Brie':
+            case 'Backstage passes to a TAFKAL80ETC concert':
+                inverselyProportionalQuality(item);
+                break;
+            default:
+                directlyProportionalQuality(item);
         }
-      }
     }
-    if (items[i].name != 'Sulfuras, Hand of Ragnaros') {
-      items[i].sell_in = items[i].sell_in - 1;
-    }
-    if (items[i].sell_in < 0) {
-      if (items[i].name != 'Aged Brie') {
-        if (items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-          if (items[i].quality > 0 && items[i].name != 'Sulfuras, Hand of Ragnaros') {
-            items[i].quality = items[i].quality - 1
-          }
-        } else {
-          items[i].quality = items[i].quality - items[i].quality
-        }
-      } else {
-        if (items[i].quality < 50) {
-          items[i].quality = items[i].quality + 1
-        }
-      }
-    }
-  }
 }
