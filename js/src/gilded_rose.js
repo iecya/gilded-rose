@@ -32,17 +32,18 @@ function inversely_proportional_quality(item) {
     }
 }
 
-function decrease_quality(item) {
+function decrease_quality(item, decreaseUnit) {
     if (item.sell_in < 0) {
-        item.quality = set_min_quality(item.quality - 2);
+        item.quality = set_min_quality(item.quality - decreaseUnit * 2);
     } else {
-        item.quality = set_min_quality(item.quality - 1);
+        item.quality = set_min_quality(item.quality - decreaseUnit);
     }
 }
 
 function directly_proportional_quality(item) {
+    const decreaseUnit = item.name === 'Conjured Mana Cake' ? 2 : 1;
     decrease_sell_in(item);
-    decrease_quality(item);
+    decrease_quality(item, decreaseUnit);
 }
 
 function update_quality2() {
