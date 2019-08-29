@@ -83,11 +83,17 @@ function inverselyProportionalQuality(item) {
     }
 }
 
-function directlyProportionalQuality(item) {
-    decrease_sell_in(item);
-    if (item.quality > 0) {
+function decreaseQuality(item) {
+    if (item.sell_in < 0) {
+        item.quality -= 2;
+    } else {
         item.quality -= 1;
     }
+}
+
+function directlyProportionalQuality(item) {
+    decrease_sell_in(item);
+    decreaseQuality(item);
 }
 
 function update_quality2() {
